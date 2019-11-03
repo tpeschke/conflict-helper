@@ -1,0 +1,97 @@
+.diceShell {
+    height: 75px;
+    width: 75px;
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 15px;
+    border-radius: 5px;
+  }
+  
+  .stress {
+    border: 3px solid darkred
+  }
+  
+  .helper {
+    border: 3px solid darkgreen
+  }
+  
+  p {
+      z-index: 1;
+      font-size: 25px;
+  }
+  
+  .diceBackground {
+    width: 75px;
+    position: absolute;
+    z-index: -1;
+  }
+  
+  .deleteButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    background: darkred;
+    color: whitesmoke;
+    border: none;
+    border-radius: 100%;
+    transition: .6s;
+    cursor: pointer;
+  }
+  
+  .deleteButton:hover {
+    opacity: 1;
+  }
+  
+  .rerollButton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    background: darkorange;
+    color: whitesmoke;
+    border: none;
+    border-radius: 100%;
+    transition: .6s;
+    cursor: pointer;
+  }
+  
+  .rerollButton:hover {
+    opacity: 1;
+  }
+  
+  .raiseButton {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    background: darkblue;
+    color: whitesmoke;
+    border: none;
+    border-radius: 100%;
+    transition: .6s;
+    cursor: pointer;
+  }
+  
+  .raiseButton:hover {
+    opacity: 1;
+  }
+  
+  .lowerButton {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    background: darkblue;
+    color: whitesmoke;
+    border: none;
+    border-radius: 100%;
+    transition: .6s;
+    cursor: pointer;
+  }
+  
+  .lowerButton:hover {
+    opacity: 1;
+  }

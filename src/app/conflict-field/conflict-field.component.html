@@ -1,0 +1,79 @@
+<mat-drawer-container>
+  <mat-drawer #drawer [opened]='opened'>
+    <div class="sideNav">
+      <div class="diceOptions">
+        <p><input placeholder="X" value="{{waitingToEscalate[0]}}" (change)="addToEscalate($event, 0)">d4</p>
+        <p><input placeholder="X" value="{{waitingToEscalate[1]}}" (change)="addToEscalate($event, 1)">d6</p>
+        <p><input placeholder="X" value="{{waitingToEscalate[2]}}" (change)="addToEscalate($event, 2)">d8</p>
+        <p><input placeholder="X" value="{{waitingToEscalate[3]}}" (change)="addToEscalate($event, 3)">d10</p>
+        <p><input placeholder="X" value="{{waitingToEscalate[4]}}" (change)="addToEscalate($event, 4)">d12</p>
+        <p><input placeholder="X" value="{{waitingToEscalate[5]}}" (change)="addToEscalate($event, 5)">d20</p>
+        <!-- <p><input placeholder="X" value="{{waitingToEscalate[6]}}" (change)="addToEscalate($event, 6)">d20 + <input placeholder="X"></p> -->
+        <!-- <p><input placeholder="X"></p> -->
+      </div>
+      <button mat-raised-button color="warn" (click)="escalateDicePool()">Escalate</button>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content [ngStyle]="team">
+    <div>
+      <div>
+        <button class="sidebarButton" mat-button color="warn" (click)="openSideNav()">Add Dice</button>
+        <mat-form-field>
+          <mat-label>Select Team</mat-label>
+          <mat-select (selectionChange)="changeTeam($event)">
+            <mat-option [value]="{borderTop: '10px solid rgb(158, 0, 0)', borderBottom: '10px solid rgb(158, 0, 0)'}">
+              Red
+            </mat-option>
+            <mat-option [value]="{borderTop: '10px solid rgb(0, 0, 158)', borderBottom: '10px solid rgb(0, 0, 158)'}">
+              Blue
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Select Role</mat-label>
+          <mat-select (selectionChange)="changeRole($event)">
+            <mat-option [value]="'main'">
+              Main
+            </mat-option>
+            <mat-option [value]="'helper'">
+              Helper
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="fieldShell">
+        <div class="diceField">
+          <app-dice-display *ngFor="let dice of foeSelected" [dice]="dice">
+          </app-dice-display>
+        </div>
+
+        <h1>Total to Beat: {{toBeat}}</h1>
+        <h2>Your Total: {{total}}</h2>
+        <div *ngIf="role === 'main' || !role">
+          <button *ngIf='team && role && selectedDice.length >= 2 && total >= toBeat' mat-raised-button color="warn" (click)="endTurn()">Send It!</button>
+          <button *ngIf='!team || !role || selectedDice.length < 2 || total < toBeat' mat-raised-button disabled>Send It!</button>
+        </div>
+        <div *ngIf="role === 'helper'">
+            <button *ngIf='team && selectedDice.length >= 1' mat-raised-button color="warn" (click)="endTurn()">Send Help!</button>
+            <button *ngIf='!team|| selectedDice.length < 1' mat-raised-button disabled>Send Help!</button>
+        </div>
+
+        <div class="diceField">
+          <app-dice-display *ngFor="let dice of selectedDice; let index = index" [dice]="dice" [selectOrDeselect]="deselectDice" [index]="index" [role]="role">
+          </app-dice-display>
+        </div>
+
+        <div class="diceField" *ngIf="helperDice">
+            <app-dice-display *ngFor="let dice of helperDice" [dice]="dice">
+            </app-dice-display>
+          </div>
+  
+        <div class="dicePool">
+          <app-dice-display *ngFor="let dice of dicePool" [dice]="dice" [selectOrDeselect]="selectDice"
+            [deleteDice]="deleteDice" [rerollDice]="rerollDice"></app-dice-display>
+        </div>
+      </div>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

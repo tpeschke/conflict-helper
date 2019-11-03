@@ -1,0 +1,34 @@
+<div *ngIf="selectOrDeselect">
+  <div *ngIf="role === 'main' || !role" class="diceShell"
+      [ngClass]="{stress : index > 1}" (click)="selectOrDeselectDice(dice.id)">
+      <img class="diceBackground" src="../../assets/{{dice.type}}.png" alt="{{dice.type}}">
+      <button class="deleteButton" *ngIf="deleteDice" (click)="deleteDice($event, dice.id)">x</button>
+      <button class="rerollButton" *ngIf="rerollDice" (click)="rerollDice($event, dice.id, 0)">r</button>
+      <button class="lowerButton" *ngIf="rerollDice && dice.type !== 'd4'" (click)="rerollDice($event, dice.id, -1)">-</button>
+      <button class="raiseButton" *ngIf="rerollDice && dice.type !== 'd20'" (click)="rerollDice($event, dice.id, 1)">+</button>
+      <button mat-icon-button>{{dice.value}}</button>
+  </div>
+  
+  <div *ngIf="role === 'helper'" class="diceShell" [ngClass]="{stress : index > 0}"
+      (click)="selectOrDeselectDice(dice.id)">
+      <img class="diceBackground" src="../../assets/{{dice.type}}.png" alt="{{dice.type}}">
+      <button class="deleteButton" *ngIf="deleteDice" (click)="deleteDice($event, dice.id)">x</button>
+      <button class="rerollButton" *ngIf="rerollDice" (click)="rerollDice($event, dice.id)">r</button>
+      <button class="lowerButton" *ngIf="rerollDice && dice.type !== 'd4'" (click)="rerollDice($event, dice.id, -1)">-</button>
+      <button class="raiseButton" *ngIf="rerollDice && dice.type !== 'd20'" (click)="rerollDice($event, dice.id, 1)">+</button>
+      <button mat-icon-button>{{dice.value}}</button>
+  </div>
+</div>
+
+<div *ngIf="!selectOrDeselect">
+  <div *ngIf="dice.helper" class="diceShell helper">
+      <img class="diceBackground" src="../../assets/{{dice.type}}.png" alt="{{dice.type}}">
+      <p>{{dice.value}}</p>
+  </div>
+  
+  
+  <div *ngIf="!dice.helper" class="diceShell">
+      <img class="diceBackground" src="../../assets/{{dice.type}}.png" alt="{{dice.type}}">
+      <p>{{dice.value}}</p>
+  </div>
+</div>
