@@ -8,11 +8,11 @@ const express = require('express')
 const app = new express()
 app.use(bodyParser.json())
 app.use(cors())
-// app.use(express.static(__dirname + `/dist/conflict-helper`));
+app.use(express.static(__dirname + `/../dist/conflict-helper`));
 
-// app.get('/*', (req, res)=>{
-//     res.sendFile(path.join(__dirname + '/dist/conflict-helper/index.html'))
-// });
+app.get('/*', (req, res)=>{
+    res.sendFile(path.join(__dirname + '/../dist/conflict-helper/index.html'))
+});
 
 const io = socket(
     app.listen(variables.port, _ => {
