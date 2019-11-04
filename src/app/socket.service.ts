@@ -15,4 +15,10 @@ export class SocketService {
       this.socket.emit('turn', data)
     }
   }
+
+  sendMessage(data) {
+    if (data.room !== '/') {
+      this.socket.emit('message', data)
+    }
+  }
 }

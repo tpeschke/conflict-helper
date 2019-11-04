@@ -32,8 +32,8 @@ io.on('connection', socket => {
         io.emit(`${data.room}-turn`, data)
     })
 
-    socket.on('notification', data => {
-        io.emit(`${data.room}-notification`, data)
+    socket.on('message', data => {
+        io.emit(`${data.room}-message`, data)
     })
 
 })
