@@ -1,0 +1,9 @@
+<div>
+  <h1>Hey! It looks like you haven't joined a room yet</h1>
+  <p>You'll need to do so to continue</p>
+  <mat-form-field (change)="setRoom($event)">
+    <input matInput placeholder="Room" value="{{room}}">
+  </mat-form-field>
+  <button *ngIf="!room" disabled mat-raised-button>Go!</button>
+  <button *ngIf="room" mat-raised-button color="primary" [routerLink]="['/', room]" [mat-dialog-close]="true">Go!</button>
+</div>

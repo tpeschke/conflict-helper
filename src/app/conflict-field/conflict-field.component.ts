@@ -4,6 +4,8 @@ import { Router, NavigationEnd } from '@angular/router'
 import { Socket } from 'ngx-socket-io';
 import { SocketService } from '../socket.service'
 import { ToastrService } from 'ngx-toastr';
+import { MatDialog } from '@angular/material/dialog';
+import { RoomCheckComponent } from '../room-check/room-check.component'
 @Component({
   selector: 'app-conflict-field',
   templateUrl: './conflict-field.component.html',
@@ -19,7 +21,8 @@ export class ConflictFieldComponent implements OnInit {
     private router: Router,
     private socket: Socket,
     private socketListener: SocketService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialog: MatDialog
   ) { }
 
   private dicePool = []
@@ -42,6 +45,13 @@ export class ConflictFieldComponent implements OnInit {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
         this.room = val.url;
+
+        if (val.url === '/') {
+          this.dialog.open(RoomCheckComponent, {
+            width: '350px',
+            disableClose: true
+          });
+        }
 
         this.socket.on(`${val.url}-turn`, result => {
           if (result.team.borderTop !== this.team.borderTop && result.role === 'main') {
