@@ -9,7 +9,7 @@ mat-drawer-content {
 }
 
 .mat-expansion-panel-header-title {
-  font-family: 'ZCOOL XiaoWei', serif !important;
+  font-family: "ZCOOL XiaoWei", serif !important;
 }
 
 .background {
@@ -25,6 +25,9 @@ mat-drawer-content {
   position: absolute;
   width: 100%;
   margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 mat-form-field {
@@ -111,12 +114,12 @@ h2 {
 }
 
 .mainMessageBody {
-  margin: 5px
+  margin: 5px;
 }
 
 i {
   font-size: 18px;
-  color: black
+  color: black;
 }
 
 .selectedIcon {
@@ -128,9 +131,35 @@ i {
 }
 
 .font {
-  font-family: 'ZCOOL XiaoWei', serif;
+  font-family: "ZCOOL XiaoWei", serif;
 }
 
 .coloring {
   color: whitesmoke;
+}
+
+.flex-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.playerHeader {
+  margin: 0 15px 5px 0;
+  font-weight: 900;
+}
+
+.playerBody {
+  margin: 0 15px 5px 0;
+}
+
+.playerHolder {
+  border-bottom: 2px solid lightgray;
+  border-top: 2px solid lightgray;
+}
+
+.escalationHeader {
+  min-width: 100px;
+  justify-content: space-between;
+  margin-right: 15px;
 }

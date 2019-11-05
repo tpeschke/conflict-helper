@@ -26,8 +26,8 @@
             <!-- <p><input class="diceInput" placeholder="X"></p> -->
           </div>
 
-          <button *ngIf='team && role && name' mat-raised-button
-            (click)="escalateDicePool()" class="font coloring" [ngStyle]="{'background': getColor(team)}">Escalate</button>
+          <button *ngIf='team && role && name' mat-raised-button (click)="escalateDicePool()" class="font coloring"
+            [ngStyle]="{'background': getColor(team)}">Escalate</button>
           <button *ngIf='!team || !role || !name' class="font" mat-raised-button disabled>Escalate</button>
         </div>
       </mat-expansion-panel>
@@ -39,7 +39,43 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <p>Player: Escalations 1 Dice Pool 4</p>
+        <div *ngIf="team === 'red'" class="playerHolder">
+          <div class="flex-row">
+            <i *ngIf="role === 'main'" class="fas fa-smile selectedIcon smileIcon"
+              [ngStyle]="{'color': getColor(team)}"></i>
+            <i *ngIf="role === 'helper'" class="fas fa-hands-helping selectedIcon"
+              [ngStyle]="{'color': getColor(team)}"></i>
+            <p class="playerBody playerHeader">{{name}}</p>
+            <p class="playerBody">(you)</p>
+          </div>
+          <div *ngIf="escalations" class="flex-row">
+            <p class="playerBody playerHeader">Escalations: </p>
+            <p class="playerBody">{{escalations}}</p>
+          </div>
+          <div class="flex-row">
+            <p class="playerBody playerHeader">Dice Pool: </p>
+            <p class="playerBody">{{dicePool.length}}</p>
+          </div>
+        </div>
+
+        <div *ngFor="let player of players">
+            <div *ngIf="player.team === 'red' && player.playerId !== playerId" class="playerHolder">
+                <div class="flex-row">
+                    <i *ngIf="player.role === 'main'" class="fas fa-smile selectedIcon smileIcon"
+                      [ngStyle]="{'color': getColor(player.team)}"></i>
+                    <i *ngIf="player.role === 'helper'" class="fas fa-hands-helping selectedIcon"
+                      [ngStyle]="{'color': getColor(player.team)}"></i>
+                    <p class="playerBody playerHeader">{{player.name}}</p>
+                  </div>
+                  <div *ngIf="player.escalations" class="flex-row">
+                    <p class="playerBody playerHeader">Escalations: </p>
+                    <p class="playerBody">{{player.escalations}}</p>
+                  </div>
+                  <div class="flex-row">
+                    <p class="playerBody playerHeader">Dice Pool: </p>
+                    <p class="playerBody">{{player.dicePoolCount}}</p>
+                  </div>
+            </div>
 
       </mat-expansion-panel>
 
@@ -50,7 +86,44 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <p>Info about Blue Team</p>
+        <div *ngIf="team === 'blue'" class="playerHolder">
+            <div class="flex-row">
+                <i *ngIf="role === 'main'" class="fas fa-smile selectedIcon smileIcon"
+                  [ngStyle]="{'color': getColor(team)}"></i>
+                <i *ngIf="role === 'helper'" class="fas fa-hands-helping selectedIcon"
+                  [ngStyle]="{'color': getColor(team)}"></i>
+                <p class="playerBody playerHeader">{{name}}</p>
+                <p class="playerBody">(you)</p>
+              </div>
+              <div *ngIf="escalations" class="flex-row">
+                <p class="playerBody playerHeader">Escalations: </p>
+                <p class="playerBody">{{escalations}}</p>
+              </div>
+              <div class="flex-row">
+                <p class="playerBody playerHeader">Dice Pool: </p>
+                <p class="playerBody">{{dicePool.length}}</p>
+              </div>
+        </div>
+
+        <div *ngFor="let player of players">
+          <div *ngIf="player.team === 'blue' && player.playerId !== playerId" class="playerHolder">
+              <div class="flex-row">
+                  <i *ngIf="player.role === 'main'" class="fas fa-smile selectedIcon smileIcon"
+                    [ngStyle]="{'color': getColor(player.team)}"></i>
+                  <i *ngIf="player.role === 'helper'" class="fas fa-hands-helping selectedIcon"
+                    [ngStyle]="{'color': getColor(player.team)}"></i>
+                  <p class="playerBody playerHeader">{{player.name}}</p>
+                </div>
+                <div *ngIf="player.escalations" class="flex-row">
+                  <p class="playerBody playerHeader">Escalations: </p>
+                  <p class="playerBody">{{player.escalations}}</p>
+                </div>
+                <div class="flex-row">
+                  <p class="playerBody playerHeader">Dice Pool: </p>
+                  <p class="playerBody">{{player.dicePoolCount}}</p>
+                </div>
+          </div>
+        </div>
 
       </mat-expansion-panel>
 
@@ -63,9 +136,11 @@
 
         <div *ngIf="messages.length > 0" class="messageDisplay">
           <div *ngFor="let message of messages" class="messageBody">
-              <i *ngIf="message.role === 'main'" class="fas fa-smile selectedIcon smileIcon" [ngStyle]="{'color': getColor(message.team)}"></i>
-              <i *ngIf="message.role === 'helper'" class="fas fa-hands-helping selectedIcon" [ngStyle]="{'color': getColor(message.team)}"></i>
-              <p class="mainMessageBody">{{message.message}}</p>
+            <i *ngIf="message.role === 'main'" class="fas fa-smile selectedIcon smileIcon"
+              [ngStyle]="{'color': getColor(message.team)}"></i>
+            <i *ngIf="message.role === 'helper'" class="fas fa-hands-helping selectedIcon"
+              [ngStyle]="{'color': getColor(message.team)}"></i>
+            <p class="mainMessageBody">{{message.message}}</p>
           </div>
         </div>
 
@@ -80,40 +155,49 @@
   <mat-drawer-content>
     <div class="background">
       <div class="topBar">
+        <div>
+          <button class="sidebarButton font coloring" mat-button [ngStyle]="{'background': getColor(team)}"
+            (click)="openSideNav()">Menu</button>
+  
+          <mat-form-field>
+            <mat-label class="font">Select Team</mat-label>
+            <mat-select (selectionChange)="changeTeam($event)">
+              <mat-option [value]="'red'" class="font">
+                Red
+              </mat-option>
+              <mat-option [value]="'blue'" class="font">
+                Blue
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <i *ngIf="role === 'main'" class="fas fa-smile selectedIcon smileIcon"
+            [ngStyle]="{'color': getColor(team)}"></i>
+          <i *ngIf="role === 'helper'" class="fas fa-hands-helping selectedIcon"
+            [ngStyle]="{'color': getColor(team)}"></i>
+          <mat-form-field>
+            <mat-label class="font">Select Role</mat-label>
+            <mat-select (selectionChange)="changeRole($event)">
+              <mat-option [value]="'main'" class="font">
+                <i class="fas fa-smile"></i>
+                Main
+              </mat-option>
+              <mat-option [value]="'helper'" class="font">
+                <i class="fas fa-hands-helping"></i>
+                Helper
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field (change)="changeName($event)" class="font">
+            <input matInput placeholder="Name">
+          </mat-form-field>
+        </div>
 
-        <button class="sidebarButton font coloring" mat-button [ngStyle]="{'background': getColor(team)}" (click)="openSideNav()">Menu</button>
-
-        <mat-form-field>
-          <mat-label class="font">Select Team</mat-label>
-          <mat-select (selectionChange)="changeTeam($event)">
-            <mat-option [value]="'red'" class="font">
-              Red
-            </mat-option>
-            <mat-option [value]="'blue'" class="font">
-              Blue
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <i *ngIf="role === 'main'" class="fas fa-smile selectedIcon smileIcon" [ngStyle]="{'color': getColor(team)}"></i>
-        <i *ngIf="role === 'helper'" class="fas fa-hands-helping selectedIcon" [ngStyle]="{'color': getColor(team)}"></i>
-        <mat-form-field>
-          <mat-label class="font">Select Role</mat-label>
-          <mat-select (selectionChange)="changeRole($event)">
-            <mat-option [value]="'main'" class="font">
-              <i class="fas fa-smile"></i>
-              Main
-            </mat-option>
-            <mat-option [value]="'helper'" class="font">
-              <i class="fas fa-hands-helping"></i>
-              Helper
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <mat-form-field (change)="changeName($event)" class="font">
-          <input matInput placeholder="Name">
-        </mat-form-field>
+        <div *ngIf="escalations" class="flex-row escalationHeader">
+          <h5 class="playerBody">Escalations</h5>
+          <p class="playerBody">{{escalations}}</p>
+        </div>
       </div>
 
       <div class="fieldShell">
@@ -126,15 +210,15 @@
         <h2>Your Total: {{total}}</h2>
 
         <div *ngIf="role === 'main' || !role">
-          <button *ngIf='team && role && selectedDice.length >= 2 && total >= toBeat && name'
-            mat-raised-button class="font coloring" (click)="endTurn()" [ngStyle]="{'background': getColor(team)}">Send It!</button>
-          <button *ngIf='!team || !role || selectedDice.length < 2 || total < toBeat || !name'
-            mat-raised-button disabled class="font">Send
+          <button *ngIf='team && role && selectedDice.length >= 2 && total >= toBeat && name' mat-raised-button
+            class="font coloring" (click)="endTurn()" [ngStyle]="{'background': getColor(team)}">Send It!</button>
+          <button *ngIf='!team || !role || selectedDice.length < 2 || total < toBeat || !name' mat-raised-button
+            disabled class="font">Send
             It!</button>
         </div>
         <div *ngIf="role === 'helper'">
-          <button *ngIf='team && selectedDice.length >= 1 && name' mat-raised-button color="warn"
-            (click)="endTurn()" class="font coloring" [ngStyle]="{'background': getColor(team)}">Send
+          <button *ngIf='team && selectedDice.length >= 1 && name' mat-raised-button color="warn" (click)="endTurn()"
+            class="font coloring" [ngStyle]="{'background': getColor(team)}">Send
             Help!</button>
           <button *ngIf='!team || selectedDice.length < 1 || !name' mat-raised-button disabled class="font">Send
             Help!</button>
