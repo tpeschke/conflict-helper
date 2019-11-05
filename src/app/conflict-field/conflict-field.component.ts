@@ -45,7 +45,7 @@ export class ConflictFieldComponent implements OnInit {
     this.router.events.subscribe((val) => {
       if (val instanceof NavigationEnd) {
         this.room = val.url;
-
+        
         if (val.url === '/') {
           this.dialog.open(RoomCheckComponent, {
             width: '350px',

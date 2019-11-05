@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-room-check',
@@ -8,7 +9,10 @@ import { RouterLink } from '@angular/router';
 })
 export class RoomCheckComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public router: Router,
+    public dialogRef: MatDialogRef<any>
+  ) { }
 
   private room: string = null;
 
@@ -20,9 +24,9 @@ export class RoomCheckComponent implements OnInit {
   }
 
   navigateToRoom () {
-    if (this.room && this.room !== '') {
-
-    }
+    this.room = this.room.trim().replace(/\s+/ig, '-')
+    this.router.navigate([`/${this.room}`])
+    this.dialogRef.close();
   }
 
 }

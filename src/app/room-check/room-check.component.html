@@ -5,5 +5,5 @@
     <input matInput placeholder="Room" value="{{room}}">
   </mat-form-field>
   <button *ngIf="!room" disabled mat-raised-button>Go!</button>
-  <button *ngIf="room" mat-raised-button color="primary" [routerLink]="['/', room]" [mat-dialog-close]="true">Go!</button>
+  <button *ngIf="room" mat-raised-button color="primary" (click)="navigateToRoom()">Go!</button>
 </div>
