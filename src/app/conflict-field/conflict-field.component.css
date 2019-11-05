@@ -8,6 +8,10 @@ mat-drawer-content {
   position: relative;
 }
 
+.mat-expansion-panel-header-title {
+  font-family: 'ZCOOL XiaoWei', serif !important;
+}
+
 .background {
   background: linear-gradient(rgba(255, 255, 255, 0), whitesmoke, whitesmoke);
   position: absolute;
@@ -121,4 +125,12 @@ i {
 
 .smileIcon {
   font-size: 21px;
+}
+
+.font {
+  font-family: 'ZCOOL XiaoWei', serif;
+}
+
+.coloring {
+  color: whitesmoke;
 }

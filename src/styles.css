@@ -56,8 +56,11 @@ section {
 }
 body {
   line-height: 1;
-  font-family: 'ZCOOL XiaoWei', serif;
-  background: lightgray;
+  background: whitesmoke;
+  font-family: 'ZCOOL XiaoWei', serif !important;
+}
+p, h1, h2, h3, h4, h5 {
+  font-family: 'ZCOOL XiaoWei', serif !important;
 }
 ol,
 ul {

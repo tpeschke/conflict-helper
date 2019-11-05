@@ -54,12 +54,12 @@ export class ConflictFieldComponent implements OnInit {
         }
 
         this.socket.on(`${val.url}-turn`, result => {
-          if (result.team.borderTop !== this.team.borderTop && result.role === 'main') {
+          if (result.team !== this.team && result.role === 'main') {
             this.foeSelected = result.selectedDice;
             this.toBeat = this.foeSelected.reduce((a, { value }) => a + value, 0);
-          } else if (result.team.borderTop === this.team.borderTop && result.role === 'main' && this.role === 'main') {
+          } else if (result.team === this.team && result.role === 'main' && this.role === 'main') {
             //put warning here that there can't be two main people per Conflict
-          } else if (result.team.borderTop === this.team.borderTop && result.role === 'helper' && this.role === 'main') {
+          } else if (result.team === this.team && result.role === 'helper' && this.role === 'main') {
             if (!this.helperDice) {
               this.helperDice = []
             }
@@ -172,10 +172,10 @@ export class ConflictFieldComponent implements OnInit {
   changeTeam(event) {
     this.team = event.value
     if (this.name) {
-      if (this.team.borderTop === '10px solid rgb(158, 0, 0)') {
-        this.socketListener.sendMessage({ team: this.team, role: this.role, name: this.name, room: this.room, type: 'warning', message: `${this.name} has changed to Red team` })
-      } else if (this.team.borderTop === '10px solid rgb(0, 0, 158)') {
-        this.socketListener.sendMessage({ team: this.team, role: this.role, name: this.name, room: this.room, type: 'warning', message: `${this.name} has changed to Blue team` })
+      if (this.team === 'red') {
+        this.socketListener.sendMessage({ team: this.team, role: this.role, name: this.name, room: this.room, type: 'warning', message: `${this.name} has changed to Red Team` })
+      } else if (this.team === 'blue') {
+        this.socketListener.sendMessage({ team: this.team, role: this.role, name: this.name, room: this.room, type: 'warning', message: `${this.name} has changed to Blue Team` })
       } else {
         this.socketListener.sendMessage({ team: this.team, role: this.role, name: this.name, room: this.room, type: 'error', message: `Something went wrong when ${this.name} tried to switch teams` })
       }
@@ -224,5 +224,15 @@ export class ConflictFieldComponent implements OnInit {
     }
     this.total = 0;
     this.selectedDice = [];
+  }
+
+  getColor(team) {
+    if (team === 'red') {
+      return '#9e0000'
+    } else if (team === 'blue') {
+      return '#00009e'
+    } else {
+      return '#000'
+    }
   }
 }
