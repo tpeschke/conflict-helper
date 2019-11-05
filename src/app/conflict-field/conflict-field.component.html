@@ -59,23 +59,24 @@
         </div>
 
         <div *ngFor="let player of players">
-            <div *ngIf="player.team === 'red' && player.playerId !== playerId" class="playerHolder">
-                <div class="flex-row">
-                    <i *ngIf="player.role === 'main'" class="fas fa-smile selectedIcon smileIcon"
-                      [ngStyle]="{'color': getColor(player.team)}"></i>
-                    <i *ngIf="player.role === 'helper'" class="fas fa-hands-helping selectedIcon"
-                      [ngStyle]="{'color': getColor(player.team)}"></i>
-                    <p class="playerBody playerHeader">{{player.name}}</p>
-                  </div>
-                  <div *ngIf="player.escalations" class="flex-row">
-                    <p class="playerBody playerHeader">Escalations: </p>
-                    <p class="playerBody">{{player.escalations}}</p>
-                  </div>
-                  <div class="flex-row">
-                    <p class="playerBody playerHeader">Dice Pool: </p>
-                    <p class="playerBody">{{player.dicePoolCount}}</p>
-                  </div>
+          <div *ngIf="player.team === 'red' && player.playerId !== playerId" class="playerHolder">
+            <div class="flex-row">
+              <i *ngIf="player.role === 'main'" class="fas fa-smile selectedIcon smileIcon"
+                [ngStyle]="{'color': getColor(player.team)}"></i>
+              <i *ngIf="player.role === 'helper'" class="fas fa-hands-helping selectedIcon"
+                [ngStyle]="{'color': getColor(player.team)}"></i>
+              <p class="playerBody playerHeader">{{player.name}}</p>
             </div>
+            <div *ngIf="player.escalations" class="flex-row">
+              <p class="playerBody playerHeader">Escalations: </p>
+              <p class="playerBody">{{player.escalations}}</p>
+            </div>
+            <div class="flex-row">
+              <p class="playerBody playerHeader">Dice Pool: </p>
+              <p class="playerBody">{{player.dicePoolCount}}</p>
+            </div>
+          </div>
+        </div>
 
       </mat-expansion-panel>
 
@@ -87,41 +88,41 @@
         </mat-expansion-panel-header>
 
         <div *ngIf="team === 'blue'" class="playerHolder">
-            <div class="flex-row">
-                <i *ngIf="role === 'main'" class="fas fa-smile selectedIcon smileIcon"
-                  [ngStyle]="{'color': getColor(team)}"></i>
-                <i *ngIf="role === 'helper'" class="fas fa-hands-helping selectedIcon"
-                  [ngStyle]="{'color': getColor(team)}"></i>
-                <p class="playerBody playerHeader">{{name}}</p>
-                <p class="playerBody">(you)</p>
-              </div>
-              <div *ngIf="escalations" class="flex-row">
-                <p class="playerBody playerHeader">Escalations: </p>
-                <p class="playerBody">{{escalations}}</p>
-              </div>
-              <div class="flex-row">
-                <p class="playerBody playerHeader">Dice Pool: </p>
-                <p class="playerBody">{{dicePool.length}}</p>
-              </div>
+          <div class="flex-row">
+            <i *ngIf="role === 'main'" class="fas fa-smile selectedIcon smileIcon"
+              [ngStyle]="{'color': getColor(team)}"></i>
+            <i *ngIf="role === 'helper'" class="fas fa-hands-helping selectedIcon"
+              [ngStyle]="{'color': getColor(team)}"></i>
+            <p class="playerBody playerHeader">{{name}}</p>
+            <p class="playerBody">(you)</p>
+          </div>
+          <div *ngIf="escalations" class="flex-row">
+            <p class="playerBody playerHeader">Escalations: </p>
+            <p class="playerBody">{{escalations}}</p>
+          </div>
+          <div class="flex-row">
+            <p class="playerBody playerHeader">Dice Pool: </p>
+            <p class="playerBody">{{dicePool.length}}</p>
+          </div>
         </div>
 
         <div *ngFor="let player of players">
           <div *ngIf="player.team === 'blue' && player.playerId !== playerId" class="playerHolder">
-              <div class="flex-row">
-                  <i *ngIf="player.role === 'main'" class="fas fa-smile selectedIcon smileIcon"
-                    [ngStyle]="{'color': getColor(player.team)}"></i>
-                  <i *ngIf="player.role === 'helper'" class="fas fa-hands-helping selectedIcon"
-                    [ngStyle]="{'color': getColor(player.team)}"></i>
-                  <p class="playerBody playerHeader">{{player.name}}</p>
-                </div>
-                <div *ngIf="player.escalations" class="flex-row">
-                  <p class="playerBody playerHeader">Escalations: </p>
-                  <p class="playerBody">{{player.escalations}}</p>
-                </div>
-                <div class="flex-row">
-                  <p class="playerBody playerHeader">Dice Pool: </p>
-                  <p class="playerBody">{{player.dicePoolCount}}</p>
-                </div>
+            <div class="flex-row">
+              <i *ngIf="player.role === 'main'" class="fas fa-smile selectedIcon smileIcon"
+                [ngStyle]="{'color': getColor(player.team)}"></i>
+              <i *ngIf="player.role === 'helper'" class="fas fa-hands-helping selectedIcon"
+                [ngStyle]="{'color': getColor(player.team)}"></i>
+              <p class="playerBody playerHeader">{{player.name}}</p>
+            </div>
+            <div *ngIf="player.escalations" class="flex-row">
+              <p class="playerBody playerHeader">Escalations: </p>
+              <p class="playerBody">{{player.escalations}}</p>
+            </div>
+            <div class="flex-row">
+              <p class="playerBody playerHeader">Dice Pool: </p>
+              <p class="playerBody">{{player.dicePoolCount}}</p>
+            </div>
           </div>
         </div>
 
@@ -158,7 +159,7 @@
         <div>
           <button class="sidebarButton font coloring" mat-button [ngStyle]="{'background': getColor(team)}"
             (click)="openSideNav()">Menu</button>
-  
+
           <mat-form-field>
             <mat-label class="font">Select Team</mat-label>
             <mat-select (selectionChange)="changeTeam($event)">
@@ -170,7 +171,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-  
+
           <i *ngIf="role === 'main'" class="fas fa-smile selectedIcon smileIcon"
             [ngStyle]="{'color': getColor(team)}"></i>
           <i *ngIf="role === 'helper'" class="fas fa-hands-helping selectedIcon"
@@ -188,7 +189,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-  
+
           <mat-form-field (change)="changeName($event)" class="font">
             <input matInput placeholder="Name">
           </mat-form-field>
