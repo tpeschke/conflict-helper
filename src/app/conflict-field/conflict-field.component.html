@@ -61,20 +61,26 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <div *ngIf="messages.length > 0">
-          <p *ngFor="let message of messages">{{message.message}}</p>
+        <div *ngIf="messages.length > 0" class="messageDisplay">
+          <div *ngFor="let message of messages" class="messageBody">
+              <i *ngIf="message.role === 'main'" class="fas fa-smile selectedIcon smileIcon"></i>
+              <i *ngIf="message.role === 'helper'" class="fas fa-hands-helping selectedIcon"></i>
+              <p class="mainMessageBody">{{message.message}}</p>
+          </div>
         </div>
 
         <div *ngIf="messages.length === 0">
           <p>There are no messages currently</p>
         </div>
 
+
       </mat-expansion-panel>
     </mat-accordion>
   </mat-drawer>
+
   <mat-drawer-content [ngStyle]="team">
-    <div>
-      <div>
+    <div class="background">
+      <div class="topBar">
         <button class="sidebarButton" mat-button color="warn" (click)="openSideNav()">Menu</button>
         <mat-form-field>
           <mat-label>Select Team</mat-label>
@@ -88,13 +94,17 @@
           </mat-select>
         </mat-form-field>
 
+        <i *ngIf="role && role === 'main'" class="fas fa-smile selectedIcon smileIcon"></i>
+        <i *ngIf="role && role === 'helper'" class="fas fa-hands-helping selectedIcon"></i>
         <mat-form-field>
           <mat-label>Select Role</mat-label>
           <mat-select (selectionChange)="changeRole($event)">
             <mat-option [value]="'main'">
+              <i class="fas fa-smile"></i>
               Main
             </mat-option>
             <mat-option [value]="'helper'">
+              <i class="fas fa-hands-helping"></i>
               Helper
             </mat-option>
           </mat-select>
@@ -114,17 +124,18 @@
         <h1>Total to Beat: {{toBeat}}</h1>
         <h2>Your Total: {{total}}</h2>
         <div *ngIf="role === 'main' || !role">
-          <button *ngIf='team && role && selectedDice.length >= 2 && total >= toBeat && name && room !== "/"' mat-raised-button
-            color="warn" (click)="endTurn()">Send It!</button>
-          <button *ngIf='!team || !role || selectedDice.length < 2 || total < toBeat || !name || room === "/"' mat-raised-button
-            disabled>Send
+          <button *ngIf='team && role && selectedDice.length >= 2 && total >= toBeat && name'
+            mat-raised-button color="warn" (click)="endTurn()">Send It!</button>
+          <button *ngIf='!team || !role || selectedDice.length < 2 || total < toBeat || !name'
+            mat-raised-button disabled>Send
             It!</button>
         </div>
         <div *ngIf="role === 'helper'">
-          <button *ngIf='team && selectedDice.length >= 1 && name && room !== "/"' mat-raised-button color="warn"
+          <button *ngIf='team && selectedDice.length >= 1 && name' mat-raised-button color="warn"
             (click)="endTurn()">Send
             Help!</button>
-          <button *ngIf='!team|| selectedDice.length < 1 && name || room === "/"' mat-raised-button disabled>Send Help!</button>
+          <button *ngIf='!team || selectedDice.length < 1 || !name' mat-raised-button disabled>Send
+            Help!</button>
         </div>
 
         <div class="diceField">

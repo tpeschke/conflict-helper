@@ -109,7 +109,7 @@ export class ConflictFieldComponent implements OnInit {
     let newDice = this.diceService.addDiceToPool(diceToEscalate)
     this.dicePool = [...this.dicePool, ...newDice]
     this.sortDice()
-    this.socketListener.sendMessage({ name: this.name, room: this.room, type: 'success', message: `${this.name} has escalated` })
+    this.socketListener.sendMessage({ team: this.team, role: this.role, name: this.name, room: this.room, type: 'success', message: `${this.name} has escalated` })
     this.waitingToEscalate = [null, null, null, null, null, null, null]
     this.drawer.opened = false
   }
@@ -145,7 +145,7 @@ export class ConflictFieldComponent implements OnInit {
         this.dicePool.splice(index, 1)
       }
     })
-    this.socketListener.sendMessage({ name: this.name, room: this.room, type: 'warning', message: `${this.name} deleted one of their dice` })
+    this.socketListener.sendMessage({ team: this.team, role: this.role, name: this.name, room: this.room, type: 'warning', message: `${this.name} deleted one of their dice` })
   }
 
   rerollDice(e, id, modifier) {
@@ -159,13 +159,13 @@ export class ConflictFieldComponent implements OnInit {
     })
     this.sortDice()
     if (modifier === 0) {
-      this.socketListener.sendMessage({ name: this.name, room: this.room, type: 'warning', message: `${this.name} has reroll 1 of their dice` })
+      this.socketListener.sendMessage({ team: this.team, role: this.role, name: this.name, room: this.room, type: 'warning', message: `${this.name} has reroll 1 of their dice` })
     } else if (modifier === 1) {
-      this.socketListener.sendMessage({ name: this.name, room: this.room, type: 'warning', message: `${this.name} has increased and rerolled 1 of their dice` })
+      this.socketListener.sendMessage({ team: this.team, role: this.role, name: this.name, room: this.room, type: 'warning', message: `${this.name} has increased and rerolled 1 of their dice` })
     } else if (modifier === -1) {
-      this.socketListener.sendMessage({ name: this.name, room: this.room, type: 'warning', message: `${this.name} has decreased and rerolled 1 of their dice` })
+      this.socketListener.sendMessage({ team: this.team, role: this.role, name: this.name, room: this.room, type: 'warning', message: `${this.name} has decreased and rerolled 1 of their dice` })
     } else {
-      this.socketListener.sendMessage({ name: this.name, room: this.room, type: 'error', message: `Something went wrong when ${this.name} tried to reroll 1 of their dice` })
+      this.socketListener.sendMessage({ team: this.team, role: this.role, name: this.name, room: this.room, type: 'error', message: `Something went wrong when ${this.name} tried to reroll 1 of their dice` })
     }
   }
 
@@ -173,11 +173,11 @@ export class ConflictFieldComponent implements OnInit {
     this.team = event.value
     if (this.name) {
       if (this.team.borderTop === '10px solid rgb(158, 0, 0)') {
-        this.socketListener.sendMessage({ name: this.name, room: this.room, type: 'warning', message: `${this.name} has changed to Red team` })
+        this.socketListener.sendMessage({ team: this.team, role: this.role, name: this.name, room: this.room, type: 'warning', message: `${this.name} has changed to Red team` })
       } else if (this.team.borderTop === '10px solid rgb(0, 0, 158)') {
-        this.socketListener.sendMessage({ name: this.name, room: this.room, type: 'warning', message: `${this.name} has changed to Blue team` })
+        this.socketListener.sendMessage({ team: this.team, role: this.role, name: this.name, room: this.room, type: 'warning', message: `${this.name} has changed to Blue team` })
       } else {
-        this.socketListener.sendMessage({ name: this.name, room: this.room, type: 'error', message: `Something went wrong when ${this.name} tried to switch teams` })
+        this.socketListener.sendMessage({ team: this.team, role: this.role, name: this.name, room: this.room, type: 'error', message: `Something went wrong when ${this.name} tried to switch teams` })
       }
     }
   }
@@ -186,11 +186,11 @@ export class ConflictFieldComponent implements OnInit {
     this.role = event.value
     if (this.name) {
       if (this.role === "main") {
-        this.socketListener.sendMessage({ name: this.name, room: this.room, type: 'warning', message: `${this.name} has changed to the main player` })
+        this.socketListener.sendMessage({ team: this.team, role: this.role, name: this.name, room: this.room, type: 'warning', message: `${this.name} has changed to the main player` })
       } else if (this.role === "helper") {
-        this.socketListener.sendMessage({ name: this.name, room: this.room, type: 'warning', message: `${this.name} has changed to a helper` })
+        this.socketListener.sendMessage({ team: this.team, role: this.role, name: this.name, room: this.room, type: 'warning', message: `${this.name} has changed to a helper` })
       } else {
-        this.socketListener.sendMessage({ name: this.name, room: this.room, type: 'error', message: `Something went wrong when ${this.name} tried to switch roles` })
+        this.socketListener.sendMessage({ team: this.team, role: this.role, name: this.name, room: this.room, type: 'error', message: `Something went wrong when ${this.name} tried to switch roles` })
       }
     }
   }
@@ -199,10 +199,10 @@ export class ConflictFieldComponent implements OnInit {
     let oldName = this.name
     this.name = event.target.value
     if (!oldName) {
-      this.socketListener.sendMessage({ name: this.name, room: this.room, type: 'success', message: `${this.name} has joined the conflict` })
+      this.socketListener.sendMessage({ team: this.team, role: this.role, name: this.name, room: this.room, type: 'success', message: `${this.name} has joined the conflict` })
       this.toastr.success('', `You've successfully joined the conflict in room ${this.room.substring(1)}`)
     } else {
-      this.socketListener.sendMessage({ name: this.name, room: this.room, type: 'success', message: `${oldName} has become ${this.name}` })
+      this.socketListener.sendMessage({ team: this.team, role: this.role, name: this.name, room: this.room, type: 'success', message: `${oldName} has become ${this.name}` })
     }
   }
 
