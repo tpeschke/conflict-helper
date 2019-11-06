@@ -5,7 +5,7 @@ mat-drawer-content {
   align-items: flex-start;
   background-image: url("../../assets/background.jpg");
   position: relative;
-  height: 94vh
+  height: 94vh;
 }
 
 .mat-expansion-panel-header-title {
@@ -62,12 +62,16 @@ mat-form-field {
   border-bottom: 1px solid lightgrey;
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin: 0; 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
 }
 
 h1,
