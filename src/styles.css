@@ -58,6 +58,7 @@ body {
   line-height: 1;
   background: whitesmoke;
   font-family: 'ZCOOL XiaoWei', serif !important;
+  min-height: 100%;
 }
 p, h1, h2, h3, h4, h5 {
   font-family: 'ZCOOL XiaoWei', serif !important;

@@ -36,4 +36,8 @@ io.on('connection', socket => {
         io.emit(`${data.room}-message`, data)
     })
 
+    socket.on('leave', data => {
+        io.emit(`${data.room}-leave`, data)
+    })
+
 })
