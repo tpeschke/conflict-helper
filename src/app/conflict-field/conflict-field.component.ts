@@ -29,7 +29,7 @@ export class ConflictFieldComponent implements OnInit {
 
   private dicePool = []
   private selectedDice = []
-  private helperDice = [{id: 'test', type: 'd4', value: 16, helper: true, owner: "owner"}];
+  private helperDice = [];
   private total = 0;
   private toBeat = 0;
   private foeSelected = []
