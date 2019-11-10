@@ -21,9 +21,10 @@
 </div>
 
 <div *ngIf="!selectOrDeselect">
-  <div *ngIf="dice.helper" class="diceShell helper">
+  <div *ngIf="dice.helper" class="diceShell helper"
+      (click)="sendBackHelper(dice.id)">
       <img class="diceBackground" src="../../assets/{{dice.type}}.png" alt="{{dice.type}}">
-      <p>{{dice.value}}</p>
+      <button mat-icon-button>{{dice.value}}</button >
   </div>
   
   

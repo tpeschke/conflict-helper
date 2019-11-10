@@ -27,4 +27,10 @@ export class SocketService {
       this.socket.emit('leave', data)
     }
   }
+
+  sendBackHelper(data) {
+    if (data.room !== '/') {
+      this.socket.emit('rejectHelper', data)
+    }
+  }
 }

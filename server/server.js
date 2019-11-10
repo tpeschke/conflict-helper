@@ -40,4 +40,7 @@ io.on('connection', socket => {
         io.emit(`${data.room}-leave`, data)
     })
 
+    socket.on('rejectHelper', data => {
+        io.emit(`${data.room}-rejectHelper`, data)
+    })
 })

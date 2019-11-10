@@ -13,6 +13,7 @@ export class DiceDisplayComponent implements OnInit {
     value: number
   } 
   @Input() selectOrDeselect?: any;
+  @Input() sendBackHelper?: any;
   @Input() deleteDice?: any;
   @Input() rerollDice?: any;
   @Input() index?: number;

@@ -29,7 +29,7 @@ export class ConflictFieldComponent implements OnInit {
 
   private dicePool = []
   private selectedDice = []
-  private helperDice = null;
+  private helperDice = [{id: 'test', type: 'd4', value: 16, helper: true, owner: "owner"}];
   private total = 0;
   private toBeat = 0;
   private foeSelected = []
@@ -106,7 +106,16 @@ export class ConflictFieldComponent implements OnInit {
           }
         })
 
-        //bottom of navigation
+        this.socket.on(`${val.url}-rejectHelper`, result => {
+          if (this.name === result.owner) {
+            this.toastr.warning('', 'Your helper dice was sent back')
+            let {room, owner, helper, ...dice} = result
+            this.dicePool.push(dice)
+            this.sortDice()
+          }
+        })
+
+        //bottom of ngOnInit
       }
     });
 
@@ -114,6 +123,8 @@ export class ConflictFieldComponent implements OnInit {
     this.selectDice = this.selectDice.bind(this)
     this.deleteDice = this.deleteDice.bind(this)
     this.rerollDice = this.rerollDice.bind(this)
+    this.rerollDice = this.rerollDice.bind(this)
+    this.sendBackHelper = this.sendBackHelper.bind(this)
   }
   
   @HostListener('window:beforeunload', [ '$event' ])
@@ -186,6 +197,18 @@ export class ConflictFieldComponent implements OnInit {
       }
     })
     this.sortDice()
+  }
+
+  sendBackHelper(id) {
+    let rejectedHelper = null;
+    this.helperDice.forEach((val, index) => {
+      if (val.id === id) {
+        rejectedHelper = this.helperDice.splice(index, 1)[0]
+      }
+    })
+    if (rejectedHelper) {
+      this.socketListener.sendBackHelper({...rejectedHelper, room: this.room})
+    }
   }
 
   deleteDice(e, id) {

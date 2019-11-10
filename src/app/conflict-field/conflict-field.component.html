@@ -232,7 +232,7 @@
         </div>
 
         <div class="diceField" *ngIf="helperDice">
-          <app-dice-display *ngFor="let dice of helperDice" [dice]="dice">
+          <app-dice-display *ngFor="let dice of helperDice" [dice]="dice" [sendBackHelper]="sendBackHelper">
           </app-dice-display>
         </div>
 
