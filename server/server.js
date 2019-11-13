@@ -22,7 +22,7 @@ const io = socket(
 
 function checkStorageForRoom(room) {
     if (!storage[room]) {
-        storage[room] = {messages: [], players: []}
+        storage[room] = {messages: [], players: [], currentTurn: {team: null, selectedDice: []}}
     }
 }
 
@@ -36,6 +36,10 @@ io.on('connection', socket => {
     })
 
     socket.on('turn', data => {
+        checkStorageForRoom(data.room)
+        let roomStorage = storage[data.room]
+        roomStorage.currentTurn.team = data.team
+        roomStorage.currentTurn.selectedDice = data.selectedDice
         io.emit(`${data.room}-turn`, data)
     })
 
@@ -72,6 +76,17 @@ io.on('connection', socket => {
     })
 
     socket.on('leave', data => {
+        checkStorageForRoom(data.room)
+        let roomStorage = storage[data.room]
+        if (roomStorage.players.length < 1) {
+            let index = roomStorage.players.findIndex(val => val.playerId === data.playerId)
+            if (index !== -1) {
+                roomStorage.players.splice(index, 1)
+            }
+            data.players = roomStorage.players
+        } else {
+            delete storage[data.room]
+        }
         io.emit(`${data.room}-leave`, data)
     })
 

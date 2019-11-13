@@ -59,7 +59,7 @@ export class ConflictFieldComponent implements OnInit {
         }
 
         this.socket.on(`${val.url}-turn`, result => {
-          if (result.team !== this.team && result.role === 'main') {
+          if (result.team !== this.team && result.role === 'main' && this.team && this.role && this.name) {
             this.foeSelected = result.selectedDice;
             this.toBeat = this.foeSelected.reduce((a, { value }) => a + value, 0);
           } else if (result.team === this.team && result.role === 'main' && this.role === 'main') {
@@ -77,24 +77,19 @@ export class ConflictFieldComponent implements OnInit {
           if (result.playerId !== this.playerId) {
             this.toastr[result.type]('', result.message)
           }
-
           if (result.code === "newPlayer" || result.code === 'change') {
             this.players = result.storage.players
+            if (result.storage.currentTurn.team && this.team && result.storage.currentTurn.team !== this.team) {
+              this.foeSelected = result.storage.currentTurn.selectedDice
+            }
+            this.toBeat = result.storage.currentTurn.selectedDice.reduce((a, { value }) => a + value, 0)
           }
           this.messages = result.storage.messages
         })
 
         this.socket.on(`${val.url}-leave`, result => {
           this.toastr[result.type]('', result.message)
-          let indexToGo = null
-          this.players.forEach((val, index) => {
-            if (val.playerId === result.playerId) {
-              indexToGo = index
-            }
-          })
-          if (indexToGo || indexToGo === 0) {
-            this.players.splice(indexToGo, 1)
-          }
+          this.players = result.players
         })
 
         this.socket.on(`${val.url}-rejectHelper`, result => {
