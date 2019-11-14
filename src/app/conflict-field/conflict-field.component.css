@@ -39,6 +39,10 @@ mat-form-field {
   height: 55px;
 }
 
+.width-200 {
+  width: 200px;
+}
+
 .sideNav {
   min-width: 200px;
   display: flex;
@@ -86,7 +90,7 @@ h2 {
 .fieldShell {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
   width: 95vw;
   margin: 75px auto 0;
@@ -109,10 +113,8 @@ h2 {
   flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: center;
-  border-top: 2px solid lightgrey;
-  background: whitesmoke;
   min-height: 100px;
-  width: 100%;
+  width: 97vw;
   margin-top: 15px;
 }
 
@@ -172,7 +174,11 @@ i {
 }
 
 .escalationHeader {
-  min-width: 100px;
   justify-content: space-between;
   margin-right: 15px;
+  margin-left: 15px;
+}
+
+.header-spacer {
+  min-width: 130px;
 }

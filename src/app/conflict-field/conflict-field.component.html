@@ -156,22 +156,22 @@
   <mat-drawer-content>
     <div class="background">
       <div class="topBar">
-        <div>
-          <button class="sidebarButton font coloring" mat-button [ngStyle]="{'background': getColor(team)}"
-            (click)="openSideNav()">Menu</button>
+        <button class="sidebarButton font coloring" mat-button [ngStyle]="{'background': getColor(team)}"
+          (click)="openSideNav()">Menu</button>
 
-          <mat-form-field>
-            <mat-label class="font">Select Team</mat-label>
-            <mat-select (selectionChange)="changeTeam($event)">
-              <mat-option [value]="'red'" class="font">
-                Red
-              </mat-option>
-              <mat-option [value]="'blue'" class="font">
-                Blue
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+        <mat-form-field>
+          <mat-label class="font">Select Team</mat-label>
+          <mat-select (selectionChange)="changeTeam($event)">
+            <mat-option [value]="'red'" class="font">
+              Red
+            </mat-option>
+            <mat-option [value]="'blue'" class="font">
+              Blue
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
+        <div class="flex-row width-200">
           <i *ngIf="role === 'main'" class="fas fa-smile selectedIcon smileIcon"
             [ngStyle]="{'color': getColor(team)}"></i>
           <i *ngIf="role === 'helper'" class="fas fa-hands-helping selectedIcon"
@@ -189,15 +189,29 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-
-          <mat-form-field (change)="changeName($event)" class="font">
-            <input matInput placeholder="Name">
-          </mat-form-field>
         </div>
 
-        <div *ngIf="escalations" class="flex-row escalationHeader">
-          <h5 class="playerBody">Escalations</h5>
-          <p class="playerBody">{{escalations}}</p>
+        <mat-form-field (change)="changeName($event)" class="font">
+          <input matInput placeholder="Name">
+        </mat-form-field>
+
+        <div class="header-spacer">
+          <div *ngIf="escalations" class="flex-row escalationHeader">
+            <h5 class="playerBody">Escalations</h5>
+            <p class="playerBody">{{escalations}}</p>
+          </div>
+        </div>
+        <div class="header-spacer">
+          <div *ngIf="stressDice" class="flex-row escalationHeader">
+            <h5 class="playerBody">Stress Dice: </h5>
+            <p class="playerBody">{{stressDice}}</p>
+          </div>
+        </div>
+        <div class="header-spacer">
+          <div *ngIf="matches" class="flex-row escalationHeader">
+            <h5 class="playerBody">Matches: </h5>
+            <p class="playerBody">{{matches}}</p>
+          </div>
         </div>
       </div>
 
@@ -231,12 +245,12 @@
           </app-dice-display>
         </div>
 
-        <div class="diceField" *ngIf="helperDice">
+        <div class="diceField" *ngIf="helperDice.length > 0">
           <app-dice-display *ngFor="let dice of helperDice" [dice]="dice" [sendBackHelper]="sendBackHelper">
           </app-dice-display>
         </div>
 
-        <div class="dicePool">
+        <div class="dicePool" [ngStyle]="{'background': getColor(team)}">
           <app-dice-display *ngFor="let dice of dicePool" [dice]="dice" [selectOrDeselect]="selectDice"
             [deleteDice]="deleteDice" [rerollDice]="rerollDice"></app-dice-display>
         </div>

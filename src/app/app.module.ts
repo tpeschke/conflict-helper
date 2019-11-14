@@ -7,6 +7,7 @@ import { RouterModule} from '@angular/router';
 import {MatInputModule} from '@angular/material/input';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 import { AppComponent } from './app.component';
 import { ConflictFieldComponent } from './conflict-field/conflict-field.component';
@@ -35,6 +36,7 @@ const config: SocketIoConfig = { url: variables.endpoint, options: {} };
     MatInputModule,
     MatExpansionModule,
     MatDialogModule,
+    MatToolbarModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
       {
