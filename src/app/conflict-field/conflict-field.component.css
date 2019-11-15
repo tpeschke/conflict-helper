@@ -60,6 +60,10 @@ mat-drawer-content {
   margin-bottom: 10px;
 }
 
+.profileButton {
+  display: none;
+}
+
 mat-form-field {
   margin-right: 15px;
   max-width: 125px;
@@ -69,12 +73,18 @@ mat-form-field {
   height: 55px;
 }
 
-.statTracker {
-  margin: 0 0 10px;
-}
-
 .width-200 {
   width: 200px;
+}
+
+.selectedIcon {
+  margin-right: 10px;
+}
+
+.flex-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .sideNav {
@@ -168,26 +178,12 @@ i {
   color: black;
 }
 
-.selectedIcon {
-  margin-right: 10px;
-}
-
 .smileIcon {
   font-size: 21px;
 }
 
-.font {
-  font-family: "ZCOOL XiaoWei", serif;
-}
-
 .coloring {
   color: whitesmoke;
-}
-
-.flex-row {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
 }
 
 .playerHeader {
@@ -211,4 +207,36 @@ i {
 
 .header-spacer {
   min-width: 130px;
+}
+
+
+@media (max-width: 450px) {
+  .sideBar {
+    width: 100vw;
+    margin: 15px 0;
+    align-items: center;
+    flex-direction: row;
+  }
+
+  .logoShell {
+    width: 115px;
+  }
+
+  .mainLogo {
+    height: 25px;
+  }
+
+  .appTitle {
+    bottom: 0px;
+    left: 5px;
+    font-size: 13px;
+  }
+
+  .profileButton {
+    display: inherit;
+  }
+
+  .statBlock {
+    display: none;
+  }
 }

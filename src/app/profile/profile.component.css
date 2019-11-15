@@ -1,0 +1,28 @@
+.statTracker {
+    margin: 0 0 10px;
+    justify-content: space-between;
+    height: 25px;
+  }
+
+  .optionShell {
+    margin: 0 auto;
+    width: 180px;
+  }
+
+  h5 {
+    margin: 0;
+  }
+
+  p {
+    margin-left: 50px;
+  }
+
+  .selectedIcon {
+    margin-right: 10px;
+  }
+
+  .flex-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

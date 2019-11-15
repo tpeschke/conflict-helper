@@ -1,0 +1,48 @@
+<div class="optionShell">
+  <mat-form-field>
+    <mat-label class="font">Select Team</mat-label>
+    <mat-select (selectionChange)="changeTeam($event)" [value]="team">
+      <mat-option [value]="'red'" class="font">
+        Red
+      </mat-option>
+      <mat-option [value]="'blue'" class="font">
+        Blue
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  
+  <div class="flex-row roleRow">
+    <mat-form-field>
+      <mat-label class="font">Select Role</mat-label>
+      <mat-select (selectionChange)="swapRole($event)" [value]="role">
+        <mat-option [value]="'main'" class="font">
+          <i class="fas fa-smile"></i>
+          Main
+        </mat-option>
+        <mat-option [value]="'helper'" class="font">
+          <i class="fas fa-hands-helping"></i>
+          Helper
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <i *ngIf="role === 'main'" class="fas fa-smile selectedIcon smileIcon" [ngStyle]="{'color': getColor(team)}"></i>
+    <i *ngIf="role === 'helper'" class="fas fa-hands-helping selectedIcon" [ngStyle]="{'color': getColor(team)}"></i>
+  </div>
+  
+  <mat-form-field (change)="changeName($event)" class="font">
+    <input matInput placeholder="Name" [value]="name">
+  </mat-form-field>
+  
+  <div *ngIf="escalations" class="flex-row statTracker">
+    <h5 class="playerBody">Escalations</h5>
+    <p class="playerBody">{{escalations}}</p>
+  </div>
+  <div *ngIf="stressDice" class="flex-row statTracker">
+    <h5 class="playerBody">Stress Dice: </h5>
+    <p class="playerBody">{{stressDice}}</p>
+  </div>
+  <div *ngIf="matches" class="flex-row statTracker">
+    <h5 class="playerBody">Matches: </h5>
+    <p class="playerBody">{{matches}}</p>
+  </div>
+</div>

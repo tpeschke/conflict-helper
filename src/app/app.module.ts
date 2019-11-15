@@ -16,7 +16,8 @@ import { DiceDisplayComponent } from './dice-display/dice-display.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { ToastrModule } from 'ngx-toastr';
 import variables from '../variables';
-import { RoomCheckComponent } from './room-check/room-check.component'
+import { RoomCheckComponent } from './room-check/room-check.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const config: SocketIoConfig = { url: variables.endpoint, options: {} };
 
@@ -25,7 +26,8 @@ const config: SocketIoConfig = { url: variables.endpoint, options: {} };
     AppComponent,
     ConflictFieldComponent,
     DiceDisplayComponent,
-    RoomCheckComponent
+    RoomCheckComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +49,10 @@ const config: SocketIoConfig = { url: variables.endpoint, options: {} };
    SocketIoModule.forRoot(config)
   ],
   providers: [],
-  entryComponents: [RoomCheckComponent],
+  entryComponents: [
+    RoomCheckComponent,
+    ProfileComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,6 +6,7 @@ import { SocketService } from '../socket.service'
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { RoomCheckComponent } from '../room-check/room-check.component'
+import { ProfileComponent } from '../profile/profile.component'
 @Component({
   selector: 'app-conflict-field',
   templateUrl: './conflict-field.component.html',
@@ -34,9 +35,9 @@ export class ConflictFieldComponent implements OnInit {
   private toBeat = 0;
   private foeSelected = []
 
-  private escalations = null;
-  private stressDice = null;
-  private matches = null;
+  private escalations = 1;
+  private stressDice = 1;
+  private matches = 1;
 
   private team = 'red';
   private role = 'main';
@@ -114,15 +115,13 @@ export class ConflictFieldComponent implements OnInit {
     this.rerollDice = this.rerollDice.bind(this)
     this.rerollDice = this.rerollDice.bind(this)
     this.sendBackHelper = this.sendBackHelper.bind(this)
+    this.changeTeam = this.changeTeam.bind(this)
+    this.changeRole = this.changeRole.bind(this)
+    this.changeName = this.changeName.bind(this)
   }
 
   @HostListener('window:beforeunload', ['$event'])
   beforeUnloadHander(event) {
-    this.socketListener.leaveConflict({ playerId: this.playerId, room: this.room, type: 'error', message: `${this.name} has left the Conflict :(` })
-  }
-
-  ngOnDestroy() {
-    // need to put in a thing that removes a player from the list
     this.socketListener.leaveConflict({ playerId: this.playerId, room: this.room, type: 'error', message: `${this.name} has left the Conflict :(` })
   }
 
@@ -293,6 +292,27 @@ export class ConflictFieldComponent implements OnInit {
     }
     this.total = 0;
     this.selectedDice = [];
+  }
+
+  openProfile() {
+    this.dialog.open(ProfileComponent, {
+      width: '250px',
+      position: {
+        top: '15px'
+      },
+      data: {
+        team: this.team,
+        role: this.role,
+        name: this.name,
+        escalations: this.escalations,
+        matches: this.matches,
+        stressDice: this.stressDice,
+        changeName: this.changeName,
+        changeTeam: this.changeTeam,
+        changeRole: this.changeRole,
+        getColor: this.getColor
+      }
+    });
   }
 
   getColor(team) {

@@ -22,7 +22,9 @@
                 (change)="addToEscalate($event, 4)">d12</p>
             <p><input class="diceInput" type="number" placeholder="X" value="{{waitingToEscalate[5]}}"
                 (change)="addToEscalate($event, 5)">d20</p>
-            <p><input class="diceInput" type="number" placeholder="X" value="{{waitingToEscalate[6]}}" (change)="addToEscalate($event, 6)">d20 + <input class="diceInput" type="number" placeholder="X" value="{{waitingToEscalate[7]}}" (change)="addToEscalate($event, 7)"></p>
+            <p><input class="diceInput" type="number" placeholder="X" value="{{waitingToEscalate[6]}}"
+                (change)="addToEscalate($event, 6)">d20 + <input class="diceInput" type="number" placeholder="X"
+                value="{{waitingToEscalate[7]}}" (change)="addToEscalate($event, 7)"></p>
             <!-- <p><input class="diceInput" placeholder="X"></p> -->
           </div>
 
@@ -167,52 +169,58 @@
         <button class="font coloring menuButton" mat-button [ngStyle]="{'background': getColor(team)}"
           (click)="openSideNav()">Menu</button>
 
-        <mat-form-field>
-          <mat-label class="font">Select Team</mat-label>
-          <mat-select (selectionChange)="changeTeam($event)">
-            <mat-option [value]="'red'" class="font">
-              Red
-            </mat-option>
-            <mat-option [value]="'blue'" class="font">
-              Blue
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <button (click)="openProfile()" class="font coloring profileButton" mat-button
+          [ngStyle]="{'color': getColor(team)}">Profile</button>
 
-        <div class="flex-row">
+        <div class="statBlock">
           <mat-form-field>
-            <mat-label class="font">Select Role</mat-label>
-            <mat-select (selectionChange)="changeRole($event)">
-              <mat-option [value]="'main'" class="font">
-                <i class="fas fa-smile"></i>
-                Main
+            <mat-label class="font">Select Team</mat-label>
+            <mat-select (selectionChange)="changeTeam($event)"  [value]="team">
+              <mat-option [value]="'red'" class="font">
+                Red
               </mat-option>
-              <mat-option [value]="'helper'" class="font">
-                <i class="fas fa-hands-helping"></i>
-                Helper
+              <mat-option [value]="'blue'" class="font">
+                Blue
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <i *ngIf="role === 'main'" class="fas fa-smile selectedIcon smileIcon"
-            [ngStyle]="{'color': getColor(team)}"></i>
-          <i *ngIf="role === 'helper'" class="fas fa-hands-helping selectedIcon"
-            [ngStyle]="{'color': getColor(team)}"></i>
-        </div>
 
-        <mat-form-field (change)="changeName($event)" class="font">
-          <input matInput placeholder="Name">
-        </mat-form-field>
-        <div *ngIf="escalations" class="flex-row statTracker">
-          <h5 class="playerBody">Escalations</h5>
-          <p class="playerBody">{{escalations}}</p>
-        </div>
-        <div *ngIf="stressDice" class="flex-row statTracker">
-          <h5 class="playerBody">Stress Dice: </h5>
-          <p class="playerBody">{{stressDice}}</p>
-        </div>
-        <div *ngIf="matches" class="flex-row statTracker">
-          <h5 class="playerBody">Matches: </h5>
-          <p class="playerBody">{{matches}}</p>
+          <div class="flex-row">
+            <mat-form-field>
+              <mat-label class="font">Select Role</mat-label>
+              <mat-select (selectionChange)="changeRole($event)"  [value]="role">
+                <mat-option [value]="'main'" class="font">
+                  <i class="fas fa-smile"></i>
+                  Main
+                </mat-option>
+                <mat-option [value]="'helper'" class="font">
+                  <i class="fas fa-hands-helping"></i>
+                  Helper
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <i *ngIf="role === 'main'" class="fas fa-smile selectedIcon smileIcon"
+              [ngStyle]="{'color': getColor(team)}"></i>
+            <i *ngIf="role === 'helper'" class="fas fa-hands-helping selectedIcon"
+              [ngStyle]="{'color': getColor(team)}"></i>
+          </div>
+
+          <mat-form-field (change)="changeName($event)" class="font">
+            <input matInput placeholder="Name"  [value]="name">
+          </mat-form-field>
+
+          <div *ngIf="escalations" class="flex-row statTracker">
+            <h5 class="playerBody">Escalations</h5>
+            <p class="playerBody">{{escalations}}</p>
+          </div>
+          <div *ngIf="stressDice" class="flex-row statTracker">
+            <h5 class="playerBody">Stress Dice: </h5>
+            <p class="playerBody">{{stressDice}}</p>
+          </div>
+          <div *ngIf="matches" class="flex-row statTracker">
+            <h5 class="playerBody">Matches: </h5>
+            <p class="playerBody">{{matches}}</p>
+          </div>
         </div>
       </div>
 
