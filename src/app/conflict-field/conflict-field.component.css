@@ -24,10 +24,40 @@ mat-drawer-content {
 .topBar {
   position: absolute;
   width: 100%;
-  margin-top: 10px;
+  height: 65px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.logoShell {
+  position: relative;
+  height: 65px;
+  width: 185px;
+}
+
+.mainLogo {
+  height: 40px;
+  margin-top: 15px;
+}
+
+.appTitle {
+  position: absolute;
+  bottom: -16px;
+  left: 33px;
+}
+
+.sideBar {
+  position: absolute;
+  width: 250px;
+  margin: 15px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.menuButton {
+  margin-bottom: 10px;
 }
 
 mat-form-field {
@@ -37,6 +67,10 @@ mat-form-field {
 
 .header-height {
   height: 55px;
+}
+
+.statTracker {
+  margin: 0 0 10px;
 }
 
 .width-200 {
@@ -81,10 +115,6 @@ input[type="number"] {
 h1,
 h2 {
   text-align: center;
-}
-
-.sidebarButton {
-  margin: 0 15px;
 }
 
 .fieldShell {

@@ -156,7 +156,15 @@
   <mat-drawer-content>
     <div class="background">
       <div class="topBar">
-        <button class="sidebarButton font coloring" mat-button [ngStyle]="{'background': getColor(team)}"
+        <div class="logoShell">
+          <img *ngIf="!team" class="mainLogo" src="../../assets/logo.png" alt="The Court">
+          <img *ngIf="team && team === 'red'" class="mainLogo" src="../../assets/logored.png" alt="The Court">
+          <img *ngIf="team && team === 'blue'" class="mainLogo" src="../../assets/logoblue.png" alt="The Court">
+          <p class="appTitle">for the <a href="https://bonfire.dragon-slayer.net/">Bonfire RPG</a></p>
+        </div>
+      </div>
+      <div class="sideBar">
+        <button class="font coloring menuButton" mat-button [ngStyle]="{'background': getColor(team)}"
           (click)="openSideNav()">Menu</button>
 
         <mat-form-field>
@@ -171,11 +179,7 @@
           </mat-select>
         </mat-form-field>
 
-        <div class="flex-row width-200">
-          <i *ngIf="role === 'main'" class="fas fa-smile selectedIcon smileIcon"
-            [ngStyle]="{'color': getColor(team)}"></i>
-          <i *ngIf="role === 'helper'" class="fas fa-hands-helping selectedIcon"
-            [ngStyle]="{'color': getColor(team)}"></i>
+        <div class="flex-row">
           <mat-form-field>
             <mat-label class="font">Select Role</mat-label>
             <mat-select (selectionChange)="changeRole($event)">
@@ -189,29 +193,26 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <i *ngIf="role === 'main'" class="fas fa-smile selectedIcon smileIcon"
+            [ngStyle]="{'color': getColor(team)}"></i>
+          <i *ngIf="role === 'helper'" class="fas fa-hands-helping selectedIcon"
+            [ngStyle]="{'color': getColor(team)}"></i>
         </div>
 
         <mat-form-field (change)="changeName($event)" class="font">
           <input matInput placeholder="Name">
         </mat-form-field>
-
-        <div class="header-spacer">
-          <div *ngIf="escalations" class="flex-row escalationHeader">
-            <h5 class="playerBody">Escalations</h5>
-            <p class="playerBody">{{escalations}}</p>
-          </div>
+        <div *ngIf="escalations" class="flex-row statTracker">
+          <h5 class="playerBody">Escalations</h5>
+          <p class="playerBody">{{escalations}}</p>
         </div>
-        <div class="header-spacer">
-          <div *ngIf="stressDice" class="flex-row escalationHeader">
-            <h5 class="playerBody">Stress Dice: </h5>
-            <p class="playerBody">{{stressDice}}</p>
-          </div>
+        <div *ngIf="stressDice" class="flex-row statTracker">
+          <h5 class="playerBody">Stress Dice: </h5>
+          <p class="playerBody">{{stressDice}}</p>
         </div>
-        <div class="header-spacer">
-          <div *ngIf="matches" class="flex-row escalationHeader">
-            <h5 class="playerBody">Matches: </h5>
-            <p class="playerBody">{{matches}}</p>
-          </div>
+        <div *ngIf="matches" class="flex-row statTracker">
+          <h5 class="playerBody">Matches: </h5>
+          <p class="playerBody">{{matches}}</p>
         </div>
       </div>
 
