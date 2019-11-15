@@ -35,14 +35,14 @@ export class ConflictFieldComponent implements OnInit {
   private toBeat = 0;
   private foeSelected = []
 
-  private escalations = 1;
-  private stressDice = 1;
-  private matches = 1;
+  private escalations = null;
+  private stressDice = null;
+  private matches = null;
 
-  private team = 'red';
-  private role = 'main';
+  private team = null;
+  private role = null;
   private room = '/';
-  private name = 'test';
+  private name = null;
 
   private waitingToEscalate = [null, null, null, null, null, null, null, null]
 
