@@ -38,12 +38,12 @@ export class ConflictFieldComponent implements OnInit {
   private stressDice = null;
   private matches = null;
 
-  private team = null;
-  private role = null;
+  private team = 'red';
+  private role = 'main';
   private room = '/';
-  private name = null;
+  private name = 'test';
 
-  private waitingToEscalate = [null, null, null, null, null, null, null]
+  private waitingToEscalate = [null, null, null, null, null, null, null, null]
 
   private messages = []
   private players = []
@@ -154,7 +154,7 @@ export class ConflictFieldComponent implements OnInit {
       this.escalations = 0
       this.socketListener.sendMessage({ code: 'dicePoolChange', dicePoolCount: this.dicePool.length, escalations: this.escalations, playerId: this.playerId, team: this.team, role: this.role, room: this.room, type: 'success', message: `${this.name} added dice to their pool` })
     }
-    this.waitingToEscalate = [null, null, null, null, null, null, null]
+    this.waitingToEscalate = [null, null, null, null, null, null, null, null]
     this.drawer.opened = false
   }
 

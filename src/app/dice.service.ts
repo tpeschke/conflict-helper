@@ -17,27 +17,41 @@ export class DiceService {
     return Math.floor(Math.random() * sides) + 1;
   }
 
-  createDice(typeIndex) {
-    if (this.diceHierarchy[typeIndex]) {
+  createDice(typeIndex, additionalDice?) {
+    if (this.diceHierarchy[typeIndex] && !additionalDice) {
       let sides = +this.diceHierarchy[typeIndex].substring(1)
-      return {id: this.createId(), value: this.rollDice(sides), type: this.diceHierarchy[typeIndex]}
+      return { id: this.createId(), value: this.rollDice(sides), type: this.diceHierarchy[typeIndex] }
+    } else {
+      let totalValue = 0;
+      let d20s = Math.floor(additionalDice / 7)
+      let extra = additionalDice > 7 ? additionalDice % 7 : 0;
+      for (let i = 1; i < d20s; i++) {
+        totalValue = totalValue + this.rollDice(20);
+      }
+      totalValue = totalValue + this.rollDice(+this.diceHierarchy[extra].substring(1))
+      return { id: this.createId(), value: totalValue, type: 'd20' }
     }
   }
 
   rerollDice(type, modifier) {
-      let typeIndex = this.diceHierarchy.indexOf(type)
-      return this.createDice(typeIndex + modifier)
+    let typeIndex = this.diceHierarchy.indexOf(type)
+    return this.createDice(typeIndex + modifier)
   }
 
   addDiceToPool(newDiceArray) {
     let createdDiceArray = []
-    newDiceArray.forEach(({typeIndex, number}) => {
+    for (let typeIndex = 0; typeIndex < 7; typeIndex++) {
+      let number = newDiceArray[typeIndex].number
       if (number !== 0 && number) {
-        for (let i = 0; i < number; i ++) {
-          createdDiceArray.push(this.createDice(typeIndex))
+        for (let i = 0; i < number; i++) {
+          if (typeIndex === 6) {
+            createdDiceArray.push(this.createDice(typeIndex, newDiceArray[7].number + 6))
+          } else {
+            createdDiceArray.push(this.createDice(typeIndex))
+          }
         }
       }
-    })
+    }
     return createdDiceArray
   }
 }
