@@ -188,7 +188,7 @@
           <div class="flex-row">
             <mat-form-field>
               <mat-label class="font">Select Role</mat-label>
-              <mat-select (selectionChange)="changeRole($event)"  [value]="role">
+              <mat-select (selectionChange)="changeRole($event)" [disabled]="!team" [value]="role">
                 <mat-option [value]="'main'" class="font">
                   <i class="fas fa-smile"></i>
                   Main
@@ -199,6 +199,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+
             <i *ngIf="role === 'main'" class="fas fa-smile selectedIcon smileIcon"
               [ngStyle]="{'color': getColor(team)}"></i>
             <i *ngIf="role === 'helper'" class="fas fa-hands-helping selectedIcon"

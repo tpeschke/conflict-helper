@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { RoomCheckComponent } from '../room-check/room-check.component'
 import { ProfileComponent } from '../profile/profile.component'
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-conflict-field',
   templateUrl: './conflict-field.component.html',
@@ -23,7 +24,8 @@ export class ConflictFieldComponent implements OnInit {
     private socket: Socket,
     private socketListener: SocketService,
     private toastr: ToastrService,
-    public dialog: MatDialog
+    private dialog: MatDialog,
+    private http: HttpClient
   ) { }
 
   private playerId: string;
@@ -80,7 +82,11 @@ export class ConflictFieldComponent implements OnInit {
         this.socket.on(`${val.url}-message`, result => {
           if (result.playerId !== this.playerId) {
             this.toastr[result.type]('', result.message)
+          } else if (result.playerId === this.playerId && result.warning) {
+            this.toastr.warning('', result.warning)
+            this.role = result.role
           }
+          
           if (result.code === "newPlayer" || result.code === 'change') {
             this.players = result.storage.players
             if (result.storage.currentTurn.team && this.team && result.storage.currentTurn.team !== this.team) {
@@ -135,7 +141,7 @@ export class ConflictFieldComponent implements OnInit {
   }
 
   calculateTotal() {
-      return this.selectedDice.reduce((a, { value }) => a + value, 0) + this.helperDice.reduce((a, { value }) => a + value, 0);;
+    return this.selectedDice.reduce((a, { value }) => a + value, 0) + this.helperDice.reduce((a, { value }) => a + value, 0);;
   }
 
   escalateDicePool() {
@@ -244,7 +250,6 @@ export class ConflictFieldComponent implements OnInit {
       this.role = event.value
       this.socketListener.sendMessage({ code: 'change', change: 'role', playerId: this.playerId, team: this.team, role: this.role, room: this.room, type: 'warning', message: `${this.name} has changed to ${this.role}` })
     }
-
   }
 
   changeName(event) {

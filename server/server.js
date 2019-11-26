@@ -48,6 +48,21 @@ io.on('connection', socket => {
         let roomStorage = storage[data.room]
         roomStorage.messages.push({message: data.message, role: data.role, team: data.team})
         if (data.code === 'newPlayer') {
+            // testing to see if there are other mains
+            if (data.role === 'main') {
+                let players = storage[data.room].players
+                let main = false
+                players.forEach(val => {
+                    if (val.playerId !== data.playerId && val.team === data.team && val.role === 'main') {
+                        main = true
+                    }
+                })
+                if (main) {
+                    data.role = 'helper'
+                    data.warning = "You can't have more than one main player on a team"
+                }
+            }  
+            // actually pushing the information
             roomStorage.players.push({team: data.team, role: data.role, name: data.name, dicePoolCount: data.dicePoolCount, escalations: null, playerId: data.playerId})
         } else if (data.code === 'change') {
             roomStorage.players = roomStorage.players.map(val => {
