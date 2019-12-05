@@ -63,7 +63,7 @@ io.on('connection', socket => {
                 }
             }  
             // actually pushing the information
-            roomStorage.players.push({team: data.team, role: data.role, name: data.name, dicePoolCount: data.dicePoolCount, escalations: null, playerId: data.playerId})
+            roomStorage.players.push({team: data.team, role: data.role, name: data.name, dicePoolCount: data.dicePoolCount, escalations: data.escalations, playerId: data.playerId})
         } else if (data.code === 'change') {
             roomStorage.players = roomStorage.players.map(val => {
                 if (val.playerId === data.playerId) {
