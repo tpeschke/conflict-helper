@@ -29,6 +29,7 @@ export class ConflictFieldComponent implements OnInit {
   ) { }
 
   private playerId: string;
+  private conflictType = 'normal';
 
   private dicePool = []
   private selectedDice = []
@@ -50,6 +51,9 @@ export class ConflictFieldComponent implements OnInit {
 
   private messages = []
   private players = []
+
+  private wearDownToBeat = 1;
+  private wearDownToBeatOld = 1;
 
   ngOnInit() {
     this.playerId = this.diceService.createId()
@@ -89,10 +93,14 @@ export class ConflictFieldComponent implements OnInit {
           
           if (result.code === "newPlayer" || result.code === 'change') {
             this.players = result.storage.players
+            this.conflictType = result.conflictType
             if (result.storage.currentTurn.team && this.team && result.storage.currentTurn.team !== this.team) {
               this.foeSelected = result.storage.currentTurn.selectedDice
             }
+            
             this.toBeat = result.storage.currentTurn.selectedDice.reduce((a, { value }) => a + value, 0)
+          } else if (result.code === "conflictChange") {
+            this.conflictType = result.conflictType;
           }
           this.messages = result.storage.messages
         })
@@ -263,6 +271,11 @@ export class ConflictFieldComponent implements OnInit {
     }
   }
 
+  changeConflictType(event) {
+    this.toastr.success('', `You've changed the Conflict type to ${event.value}`)
+    this.socketListener.sendMessage({ code: 'conflictChange', conflictType: event.value, playerId: this.playerId, name: this.name, team: this.team, role: this.role, room: this.room, type: 'success', message: `${this.name} has changed the Conflict Type to ${event.value}` })
+  }
+
   checkIfJoined() {
     if (this.team && this.role && this.name) {
       this.socketListener.sendMessage({ code: 'newPlayer', playerId: this.playerId, name: this.name, team: this.team, role: this.role, room: this.room, dicePoolCount: 0, type: 'success', message: `${this.name} has joined the conflict` })
@@ -297,6 +310,13 @@ export class ConflictFieldComponent implements OnInit {
     }
     this.total = 0;
     this.selectedDice = [];
+  }
+
+  endTurnWearDown() {
+    this.socketListener.sendInfo({ room: this.room, team: this.team, role: this.role, selectedDice: [{id: "weardowntobeat", value: this.wearDownToBeat, type: "wearDown"}] });
+    let newOldToBeat = this.wearDownToBeat;
+    this.wearDownToBeat = this.wearDownToBeat + this.wearDownToBeatOld;
+    this.wearDownToBeatOld = newOldToBeat;
   }
 
   openProfile() {

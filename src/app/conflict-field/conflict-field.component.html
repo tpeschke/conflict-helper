@@ -152,6 +152,31 @@
         </div>
 
       </mat-expansion-panel>
+
+      <!-- <mat-expansion-panel> -->
+        <mat-expansion-panel *ngIf="team && role && name">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Change Conflict Type
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-form-field>
+          <mat-label class="font">Select Type</mat-label>
+          <mat-select (selectionChange)="changeConflictType($event)" [value]="conflictType">
+            <mat-option [value]="'normal'" class="font">
+              Normal
+            </mat-option>
+            <mat-option [value]="'morale'" class="font">
+              Morale
+            </mat-option>
+            <mat-option [value]="'wear down'" class="font">
+              Wear Down
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </mat-expansion-panel>
     </mat-accordion>
   </mat-drawer>
 
@@ -175,7 +200,7 @@
         <div class="statBlock">
           <mat-form-field>
             <mat-label class="font">Select Team</mat-label>
-            <mat-select (selectionChange)="changeTeam($event)"  [value]="team">
+            <mat-select (selectionChange)="changeTeam($event)" [value]="team">
               <mat-option [value]="'red'" class="font">
                 Red
               </mat-option>
@@ -207,7 +232,7 @@
           </div>
 
           <mat-form-field (change)="changeName($event)" class="font">
-            <input matInput placeholder="Name"  [value]="name">
+            <input matInput placeholder="Name" [value]="name">
           </mat-form-field>
 
           <div *ngIf="escalations" class="flex-row statTracker">
@@ -235,11 +260,10 @@
         <h2>Your Total: {{total}}</h2>
 
         <div *ngIf="role === 'main' || !role">
-          <button *ngIf='team && role && selectedDice.length >= 2 && total >= toBeat && name' mat-raised-button
+          <button *ngIf='team && role && selectedDice.length >= 1 && total >= toBeat && name' mat-raised-button
             class="font coloring" (click)="endTurn()" [ngStyle]="{'background': getColor(team)}">Send It!</button>
-          <button *ngIf='!team || !role || selectedDice.length < 2 || total < toBeat || !name' mat-raised-button
-            disabled class="font">Send
-            It!</button>
+          <button *ngIf='!team || !role || selectedDice.length < 1 || total < toBeat || !name' mat-raised-button
+            disabled class="font">Send It!</button>
         </div>
         <div *ngIf="role === 'helper'">
           <button *ngIf='team && selectedDice.length >= 1 && name' mat-raised-button color="warn" (click)="endTurn()"
@@ -260,10 +284,13 @@
           </app-dice-display>
         </div>
 
-        <div class="dicePool" [ngStyle]="{'background': getColor(team)}">
+        <div *ngIf="conflictType !== 'wear down' || dicePool.length > 0" class="dicePool" [ngStyle]="{'background': getColor(team)}">
           <app-dice-display *ngFor="let dice of dicePool" [dice]="dice" [selectOrDeselect]="selectDice"
             [deleteDice]="deleteDice" [rerollDice]="rerollDice"></app-dice-display>
         </div>
+
+        <button *ngIf='team && role && name && conflictType === "wear down" && dicePool.length == 0' mat-raised-button
+              class="font coloring" (click)="endTurnWearDown()" [ngStyle]="{'background': getColor(team)}">Aggress</button>
       </div>
     </div>
   </mat-drawer-content>

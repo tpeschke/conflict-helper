@@ -22,7 +22,7 @@ const io = socket(
 
 function checkStorageForRoom(room) {
     if (!storage[room]) {
-        storage[room] = {messages: [], players: [], currentTurn: {team: null, selectedDice: []}}
+        storage[room] = {ConflictType: 'normal', messages: [], players: [], currentTurn: {team: null, selectedDice: []}}
     }
 }
 
@@ -85,6 +85,8 @@ io.on('connection', socket => {
                     return val
                 }
             })
+        } else if (data.code === 'conflictChange') {
+            roomStorage.ConflictType = data.ConflictType
         }
         data.storage = roomStorage 
         io.emit(`${data.room}-message`, data)
