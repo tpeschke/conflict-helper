@@ -52,8 +52,7 @@ export class ConflictFieldComponent implements OnInit {
   private messages = []
   private players = []
 
-  private wearDownToBeat = 1;
-  private wearDownToBeatOld = 1;
+  private powerlessToBeat = 4;
 
   ngOnInit() {
     this.playerId = this.diceService.createId()
@@ -312,11 +311,9 @@ export class ConflictFieldComponent implements OnInit {
     this.selectedDice = [];
   }
 
-  endTurnWearDown() {
-    this.socketListener.sendInfo({ room: this.room, team: this.team, role: this.role, selectedDice: [{id: "weardowntobeat", value: this.wearDownToBeat, type: "wearDown"}] });
-    let newOldToBeat = this.wearDownToBeat;
-    this.wearDownToBeat = this.wearDownToBeat + this.wearDownToBeatOld;
-    this.wearDownToBeatOld = newOldToBeat;
+  endTurnpowerless() {
+    this.socketListener.sendInfo({ room: this.room, team: this.team, role: this.role, selectedDice: [{id: "powerlesstobeat", value: this.powerlessToBeat, type: "powerless"}] });
+    this.powerlessToBeat += 4;
   }
 
   openProfile() {

@@ -170,6 +170,9 @@
             <mat-option [value]="'morale'" class="font">
               Morale
             </mat-option>
+            <mat-option [value]="'powerless'" class="font">
+              Powerless
+            </mat-option>
             <mat-option [value]="'wear down'" class="font">
               Wear Down
             </mat-option>
@@ -284,13 +287,13 @@
           </app-dice-display>
         </div>
 
-        <div *ngIf="conflictType !== 'wear down' || dicePool.length > 0" class="dicePool" [ngStyle]="{'background': getColor(team)}">
+        <div *ngIf="conflictType !== 'powerless' || dicePool.length > 0" class="dicePool" [ngStyle]="{'background': getColor(team)}">
           <app-dice-display *ngFor="let dice of dicePool" [dice]="dice" [selectOrDeselect]="selectDice"
             [deleteDice]="deleteDice" [rerollDice]="rerollDice"></app-dice-display>
         </div>
 
-        <button *ngIf='team && role && name && conflictType === "wear down" && dicePool.length == 0' mat-raised-button
-              class="font coloring" (click)="endTurnWearDown()" [ngStyle]="{'background': getColor(team)}">Aggress</button>
+        <button *ngIf='team && role && name && conflictType === "powerless" && dicePool.length == 0' mat-raised-button
+              class="font coloring" (click)="endTurnpowerless()" [ngStyle]="{'background': getColor(team)}">Aggress</button>
       </div>
     </div>
   </mat-drawer-content>
